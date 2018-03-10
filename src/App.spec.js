@@ -7,7 +7,17 @@ import appDriver from './App.driver';
 
 configure({ adapter: new Adapter() });
 let driver;
-beforeEach(() => (driver = appDriver()));
+beforeEach(() => {
+  driver = appDriver();
+  window.localStorage = {
+    getItem() {},
+    setItem() {},
+  };
+});
+
+afterEach(() => {
+  window.localStorage = undefined;
+});
 
 test('renders without crashing', () => {
   const div = document.createElement('div');
@@ -37,4 +47,64 @@ test('"O" should win the game', () => {
   driver.clickACellAt(7);
   driver.clickACellAt(2);
   expect(driver.getWinnerMessage()).toBe(`${p2Name} won!`);
+});
+
+test('should be tie', () => {
+  const p1Name = 'Yaniv';
+  const p2Name = 'Computer';
+  driver.render(<App />);
+  driver.newGame(p1Name, p2Name);
+  driver.clickACellAt(0);
+  driver.clickACellAt(1);
+  driver.clickACellAt(2);
+  driver.clickACellAt(3);
+  driver.clickACellAt(4);
+  driver.clickACellAt(6);
+  driver.clickACellAt(5);
+  driver.clickACellAt(8);
+  driver.clickACellAt(7);
+  expect(driver.getTieMessage()).toBe(`It's a tie!`);
+});
+
+test('should disallow click on already selected cell', () => {
+  const p1Name = 'Yaniv';
+  const p2Name = 'Computer';
+  driver.render(<App />);
+  driver.newGame(p1Name, p2Name);
+
+  driver.clickACellAt(0);
+  expect(driver.getACellAt(0)).toBe('X');
+  driver.clickACellAt(0);
+  expect(driver.getACellAt(0)).toBe('X');
+});
+
+test('should highlight current player', () => {
+  const p1Name = 'Yaniv';
+  const p2Name = 'Computer';
+  driver.render(<App />);
+  driver.newGame(p1Name, p2Name);
+
+  expect(driver.isPlayer1Selected()).toBeTruthy();
+  driver.clickACellAt(0);
+  expect(driver.isPlayer2Selected()).toBeTruthy();
+});
+
+test('should hide registration form', () => {
+  const p1Name = 'Yaniv';
+  const p2Name = 'Computer';
+  driver.render(<App />);
+
+  expect(driver.isRegistrationFormVisible()).toBeTruthy();
+  driver.newGame(p1Name, p2Name);
+  expect(driver.isRegistrationFormVisible()).toBeFalsy();
+});
+
+test('should hide registration form', () => {
+  const p1Name = 'Yaniv';
+  const p2Name = 'Computer';
+  driver.render(<App />);
+
+  expect(driver.isGameBoardVisible()).toBeFalsy();
+  driver.newGame(p1Name, p2Name);
+  expect(driver.isGameBoardVisible()).toBeTruthy();
 });

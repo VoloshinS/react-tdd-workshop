@@ -40,15 +40,18 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <Game
-          onCellClicked={this.handleCellClick}
-          board={this.state.board}
-          p1Name={this.state.p1Name}
-          p2Name={this.state.p2Name}
-          currentPlayer={this.state.currentPlayer}
-        />
         {!isGameStarted && (
           <Registration data-hook="registration-form" onNewGame={this.onNewGame} />
+        )}
+        {isGameStarted && (
+          <Game
+            data-hook="game-board"
+            onCellClicked={this.handleCellClick}
+            board={this.state.board}
+            p1Name={this.state.p1Name}
+            p2Name={this.state.p2Name}
+            currentPlayer={this.state.currentPlayer}
+          />
         )}
         {this.state.winner && (
           <div data-hook="winner-message">

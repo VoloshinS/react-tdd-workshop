@@ -88,3 +88,13 @@ test('should hide registration form', () => {
   driver.newGame(p1Name, p2Name);
   expect(driver.isRegistrationFormVisible()).toBeFalsy();
 });
+
+test('should hide registration form', () => {
+  const p1Name = 'Yaniv';
+  const p2Name = 'Computer';
+  driver.render(<App />);
+
+  expect(driver.isGameBoardVisible()).toBeFalsy();
+  driver.newGame(p1Name, p2Name);
+  expect(driver.isGameBoardVisible()).toBeTruthy();
+});

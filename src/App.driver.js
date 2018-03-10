@@ -27,6 +27,7 @@ const appDriver = () => {
     getWinnerMessage: () => wrapper.find('[data-hook="winner-message"]').text(),
     getTieMessage: () => wrapper.find('[data-hook="tie-message"]').text(),
     isRegistrationFormVisible: () => wrapper.find('[data-hook="registration-form"]').length,
+    isGameBoardVisible: () => wrapper.find('[data-hook="game-board"]').length,
   };
 };
 

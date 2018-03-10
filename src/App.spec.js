@@ -39,6 +39,23 @@ test('"O" should win the game', () => {
   expect(driver.getWinnerMessage()).toBe(`${p2Name} won!`);
 });
 
+test('should be tie', () => {
+  const p1Name = 'Yaniv';
+  const p2Name = 'Computer';
+  driver.render(<App />);
+  driver.newGame(p1Name, p2Name);
+  driver.clickACellAt(0);
+  driver.clickACellAt(1);
+  driver.clickACellAt(2);
+  driver.clickACellAt(3);
+  driver.clickACellAt(4);
+  driver.clickACellAt(6);
+  driver.clickACellAt(5);
+  driver.clickACellAt(8);
+  driver.clickACellAt(7);
+  expect(driver.getTieMessage()).toBe(`It's a tie!`);
+});
+
 test('should disallow click on already selected cell', () => {
   const p1Name = 'Yaniv';
   const p2Name = 'Computer';

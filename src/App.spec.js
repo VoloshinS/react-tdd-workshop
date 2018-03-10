@@ -78,3 +78,13 @@ test('should highlight current player', () => {
   driver.clickACellAt(0);
   expect(driver.isPlayer2Selected()).toBeTruthy();
 });
+
+test('should hide registration form', () => {
+  const p1Name = 'Yaniv';
+  const p2Name = 'Computer';
+  driver.render(<App />);
+
+  expect(driver.isRegistrationFormVisible()).toBeTruthy();
+  driver.newGame(p1Name, p2Name);
+  expect(driver.isRegistrationFormVisible()).toBeFalsy();
+});

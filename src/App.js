@@ -36,9 +36,10 @@ class App extends React.Component {
     this.setState({ board, currentPlayer: nextPlayer });
   };
   render() {
+    const isGameStarted = this.state.p1Name && this.state.p2Name;
+
     return (
       <div className="App">
-        <Registration onNewGame={this.onNewGame} />
         <Game
           onCellClicked={this.handleCellClick}
           board={this.state.board}
@@ -46,6 +47,9 @@ class App extends React.Component {
           p2Name={this.state.p2Name}
           currentPlayer={this.state.currentPlayer}
         />
+        {!isGameStarted && (
+          <Registration data-hook="registration-form" onNewGame={this.onNewGame} />
+        )}
         {this.state.winner && (
           <div data-hook="winner-message">
             {`${this.state.winner === 'X' ? this.state.p1Name : this.state.p2Name} won!`}

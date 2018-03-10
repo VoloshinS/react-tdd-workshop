@@ -26,6 +26,7 @@ const appDriver = () => {
     isPlayer2Selected: () => wrapper.find('[data-hook="p2-name"]').hasClass('active'),
     getWinnerMessage: () => wrapper.find('[data-hook="winner-message"]').text(),
     getTieMessage: () => wrapper.find('[data-hook="tie-message"]').text(),
+    isRegistrationFormVisible: () => wrapper.find('[data-hook="registration-form"]').length,
   };
 };
 

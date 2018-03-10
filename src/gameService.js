@@ -29,3 +29,13 @@ export const gameStatus = board => {
     return 'tie';
   }
 };
+
+export const saveGame = game => {
+  window.localStorage.setItem('game', JSON.stringify(game));
+};
+
+export const getGame = () => {
+  const game = window.localStorage.getItem('game');
+
+  return game && JSON.parse(game);
+};

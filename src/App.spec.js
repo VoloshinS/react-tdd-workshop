@@ -7,7 +7,17 @@ import appDriver from './App.driver';
 
 configure({ adapter: new Adapter() });
 let driver;
-beforeEach(() => (driver = appDriver()));
+beforeEach(() => {
+  driver = appDriver();
+  window.localStorage = {
+    getItem() {},
+    setItem() {},
+  };
+});
+
+afterEach(() => {
+  window.localStorage = undefined;
+});
 
 test('renders without crashing', () => {
   const div = document.createElement('div');

@@ -10,6 +10,10 @@ describe('Tic Tac Toe', () => {
     await driver.navigate();
   });
 
+  afterEach(async () => {
+    await driver.clearStorage();
+  });
+
   test('should start a new game', async () => {
     const player1 = 'Yaniv';
     const player2 = 'Computer';
@@ -40,5 +44,15 @@ describe('Tic Tac Toe', () => {
     await driver.clickACellAt(4);
     await driver.clickACellAt(2);
     expect(await driver.getWinnerMessage()).toBe(`${player1} won!`);
+  });
+
+  test('game state should persist between reloads', async () => {
+    const player1 = 'Yaniv';
+    const player2 = 'Computer';
+    await driver.newGame(player1, player2);
+    await driver.clickACellAt(0);
+    expect(await driver.getACellValueAt(0)).toBe('X');
+    await driver.reloadPage();
+    expect(await driver.getACellValueAt(0)).toBe('X');
   });
 });

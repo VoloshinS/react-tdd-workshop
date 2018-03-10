@@ -1,7 +1,7 @@
 import React from 'react';
 import Registration from './Registration';
 import Game from './Game';
-import { gameStatus } from './gameService';
+import { gameStatus, saveGame, getGame } from './gameService';
 import './App.css';
 
 class App extends React.Component {
@@ -16,6 +16,15 @@ class App extends React.Component {
       currentPlayer: 'X',
     };
   }
+
+  componentWillMount() {
+    const game = getGame();
+
+    if (game) {
+      this.setState(game);
+    }
+  }
+
   onNewGame = ({ p1Name, p2Name }) => {
     this.setState({ p1Name, p2Name });
   };
@@ -33,8 +42,10 @@ class App extends React.Component {
       this.setState({ tie: true });
     }
     const nextPlayer = this.state.currentPlayer === 'X' ? 'O' : 'X';
-    this.setState({ board, currentPlayer: nextPlayer });
+
+    this.setState({ board, currentPlayer: nextPlayer }, () => saveGame(this.state));
   };
+
   render() {
     const isGameStarted = this.state.p1Name && this.state.p2Name;
 

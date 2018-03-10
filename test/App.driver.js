@@ -1,5 +1,7 @@
 const appDriver = page => ({
   navigate: () => page.goto('http://localhost:3000'),
+  reloadPage: () => page.reload(),
+  clearStorage: () => page.evaluate(() => window.localStorage.removeItem('game')),
   newGame: async (player1, player2) => {
     await page.type('[data-hook="p1-input"]', player1);
     await page.type('[data-hook="p2-input"]', player2);

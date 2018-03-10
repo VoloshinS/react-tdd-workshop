@@ -22,6 +22,8 @@ const appDriver = () => {
         .find('[data-hook="cell"]')
         .at(index)
         .text(),
+    isPlayer1Selected: () => wrapper.find('[data-hook="p1-name"]').hasClass('active'),
+    isPlayer2Selected: () => wrapper.find('[data-hook="p2-name"]').hasClass('active'),
     getWinnerMessage: () => wrapper.find('[data-hook="winner-message"]').text(),
     getTieMessage: () => wrapper.find('[data-hook="tie-message"]').text(),
   };

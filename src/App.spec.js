@@ -67,3 +67,14 @@ test('should disallow click on already selected cell', () => {
   driver.clickACellAt(0);
   expect(driver.getACellAt(0)).toBe('X');
 });
+
+test('should highlight current player', () => {
+  const p1Name = 'Yaniv';
+  const p2Name = 'Computer';
+  driver.render(<App />);
+  driver.newGame(p1Name, p2Name);
+
+  expect(driver.isPlayer1Selected()).toBeTruthy();
+  driver.clickACellAt(0);
+  expect(driver.isPlayer2Selected()).toBeTruthy();
+});
